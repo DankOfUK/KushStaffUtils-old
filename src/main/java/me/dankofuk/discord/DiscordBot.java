@@ -81,8 +81,8 @@ public class DiscordBot extends ListenerAdapter {
             EmbedBuilder helpEmbed = new EmbedBuilder();
             helpEmbed.setColor(Color.RED);
             helpEmbed.setTitle("__`Help Page 1/1`__");
-            helpEmbed.setDescription("Command List");
-            helpEmbed.addField(discordBotCommandPrefix + "Help Commands", "help", false);
+            helpEmbed.setDescription("__**Command Prefix:**__ `" + discordBotCommandPrefix + "`");
+            helpEmbed.addField("Help Commands", "help", false);
             helpEmbed.setFooter("Help Page 1/1 - KushStaffUtils v2");
             event.getChannel().sendMessageEmbeds(helpEmbed.build()).queue();
         }
