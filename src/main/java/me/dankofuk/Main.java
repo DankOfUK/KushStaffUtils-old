@@ -17,14 +17,20 @@ public class Main extends JavaPlugin implements Listener {
     private JDA jda;
     private Plugin plugin;
     private DiscordBot discordBot;
+    private FileConfiguration config;
 
     // Instance
     private static Main instance;
 
+    public static Main getInstance() {
+        return instance;
+    }
 
+    // onEnable
     public void onEnable() {
         saveDefaultConfig();
         FileConfiguration config = getConfig();
+        instance = this;
 
         // BStats
         boolean bStatsEnabled = config.getBoolean("bStatsEnabled");
@@ -58,16 +64,19 @@ public class Main extends JavaPlugin implements Listener {
         getLogger().info("[KushStaffUtils-v2] Plugin has been enabled");
     }
 
+
+    // BStats Method
     private void bStatsEnabled(boolean bStatsEnabled) {
     }
 
+    // onDisable
     public void onDisable() {
         // stop Discord bot
         discordBot.stopBot(); // Stops Discord Bot
         getLogger().info("[KushStaffUtils-v2] Plugin has been disabled!");
     }
 
-
+    // Reload Command
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("ksu")) {
             if (!sender.hasPermission("ksu.reload")) {
@@ -84,9 +93,11 @@ public class Main extends JavaPlugin implements Listener {
         return false;
     }
 
+
     public void reloadConfigOptions() {
         reloadConfig();
         FileConfiguration config = getConfig();
+        instance = this;
 
         // No Permission Message
         String noPermissionMessage = config.getString("noPermissionMessage");

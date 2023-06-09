@@ -1,6 +1,7 @@
 package me.dankofuk.discord;
 
 import me.dankofuk.Main;
+import me.dankofuk.discord.commands.ReloadCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -9,6 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.awt.*;
@@ -20,8 +22,9 @@ public class DiscordBot extends ListenerAdapter {
     public String discordBotCommandPrefix;
     public Plugin discordBotTask;
     public String discordBotActivity;
+    public FileConfiguration config;
 
-    private JDA jda;
+    public JDA jda;
     public Main main;
 
     public DiscordBot(String discordBotToken, boolean discordBotEnabled, String discordBotCommandPrefix, String discordBotActivity, Main main) {
@@ -54,7 +57,7 @@ public class DiscordBot extends ListenerAdapter {
         // Register Discord Events
 
         // Reload Command
-        //jda.addEventListener(new ReloadCommand(this, commandPrefix, config, logChannelId, logAsEmbed, titleFormat, footerFormat, listThumbnailUrl));
+        jda.addEventListener(new ReloadCommand(this));
     }
 
     // Method for stopping the Discord Bot
