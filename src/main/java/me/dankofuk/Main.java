@@ -71,12 +71,12 @@ public class Main extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("ksu")) {
             if (!sender.hasPermission("ksu.reload")) {
-                sender.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(getConfig().getString("no_permission"))));
+                sender.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(getConfig().getString("noPermissionMessage"))));
                 return true;
             }
             if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
                 reloadConfigOptions();
-                sender.sendMessage(ColorUtils.translateColorCodes(getConfig().getString("reload_message")));
+                sender.sendMessage(ColorUtils.translateColorCodes(getConfig().getString("reloadConfig")));
                 return true;
             }
             return false;
@@ -89,7 +89,11 @@ public class Main extends JavaPlugin implements Listener {
         FileConfiguration config = getConfig();
 
         // No Permission Message
-        String noPermissionMessage = config.getString("no-permission-message");
+        String noPermissionMessage = config.getString("noPermissionMessage");
+        String reloadConfig = config.getString("reloadConfig");
+
+        // Reload Discord Bot
+        discordBot.reloadBot(config.getString("bot.botToken"), config.getBoolean("bot.botEnabled"), config.getString("bot.botCommandPrefix"), config.getString("bot.botActivityMessage"));
 
         getLogger().info("[KushStaffUtils-v2] Config options have been reloaded!");
 

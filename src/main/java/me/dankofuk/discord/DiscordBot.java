@@ -1,14 +1,17 @@
 package me.dankofuk.discord;
 
 import me.dankofuk.Main;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.awt.*;
 import java.util.List;
 
 public class DiscordBot extends ListenerAdapter {
@@ -64,6 +67,27 @@ public class DiscordBot extends ListenerAdapter {
                     .forEach(task -> task.cancel());
         }
     }
+
+    // Help Command
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
+        String message = event.getMessage().getContentRaw();
+        // Help Command
+        if (message.equalsIgnoreCase(discordBotCommandPrefix + "help")) {
+            EmbedBuilder helpEmbed = new EmbedBuilder();
+            helpEmbed.setColor(Color.RED);
+            helpEmbed.setTitle("__`Help Page 1/1`__");
+            helpEmbed.setDescription("Command List");
+            helpEmbed.addField(discordBotCommandPrefix + "Help Commands", "help", false);
+            helpEmbed.setFooter("Help Page 1/1 - KushStaffUtils v2");
+            event.getChannel().sendMessageEmbeds(helpEmbed.build()).queue();
+        }
+    }
+
 
     // Reloads the Discord Bot configuration and restarts it
     public void reloadBot(String discordBotToken, boolean discordBotEnabled, String discordBotCommandPrefix, String discordBotActivity) {
